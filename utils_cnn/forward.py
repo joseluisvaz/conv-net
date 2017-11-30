@@ -67,7 +67,7 @@ def conv_layer(A_prev, W, b, parameters):
                     # Use the corners to define the (3D) slice of a_prev_pad (See Hint above the cell).
                     a_slice_prev = a_prev_pad[vert_start:vert_end, horiz_start:horiz_end, :]
                     # Convolve the (3D) slice with the correct filter W and bias b, to get back one output neuron.
-                    Z[i, h, w, c] = conv_layer(a_slice_prev, W[:, :, :, c], b[:, :, :, c])
+                    Z[i, h, w, c] = convolution_single_step(a_slice_prev, W[:, :, :, c], b[:, :, :, c])
 
     # Making sure your output shape is correct
     assert (Z.shape == (m, n_H, n_W, n_C))
