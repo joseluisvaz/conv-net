@@ -1,6 +1,7 @@
 import numpy as np
 from utils import load_dataset
 from utils import convert_to_one_hot
+from utils import accuracy
 from layers.convolutional_layer import Conv
 from layers.fullyconnected import FullyConnected
 from layers.flatten import Flatten
@@ -27,10 +28,20 @@ layers = [
         FullyConnected((20, 6), activation=linear, weight_init=lambda shp: np.random.normal(size=shp) * np.sqrt(1.0 / ( 20+ 6)))
 ]
 
-lr = 0.001
+batch_size = 20
+
+lr = 0.0001
 k = 2000
 net = Network(layers, lr=lr, loss=cross_entropy)
 
 for epoch in xrange(10000):
-    net.train_step((X_train[:10], Y_train[:10]))
+    shuffled_index = np.random.permutation(X_train.shape[0])
+    batch_train_X = X_train[shuffled_index[:batch_size]]
+    batch_train_Y = Y_train[shuffled_index[:batch_size]]
+    net.train_step((batch_train_X, batch_train_Y))
     loss = np.sum(cross_entropy.compute((net.forward(X_train[:10]), Y_train[:10])))
+    print 'Epoch: %d loss : %f' % (epoch, loss)
+    if epoch % 1000 == 1:
+        print 'Accuracy on first 50 test set\'s batch : %f' % accuracy(net, X_test[:50], Y_test[:50])
+    if epoch % 5000 == 5000 - 1:
+        print 'Accuracy over all test set %f' % accuracy(net, X_test, Y_test)
