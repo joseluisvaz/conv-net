@@ -1,5 +1,5 @@
 
-from layer import AbstractLayer
+from abstract_layer import AbstractLayer
 
 class FullyConnected(AbstractLayer):
     def __init__(self, wshape, activation, weight_init):

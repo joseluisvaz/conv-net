@@ -1,5 +1,5 @@
 import numpy as np
-from layer import AbstractLayer
+from abstract_layer import AbstractLayer
 
 class Flatten(AbstractLayer):
     def __init__(self, shape):
