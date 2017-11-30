@@ -25,8 +25,8 @@ def he_initialization(W_shape):
     :param W_shape:
     :return: W_initialized
     """
-    n_in =  1
-    for i in range(len(W_shape) - 1):
+    n_in = 1
+    for i in range(len(W_shape)-1):
         n_in *= W_shape[i]
     W_initialized = np.random.randn(*W_shape)*2/n_in
     return W_initialized
